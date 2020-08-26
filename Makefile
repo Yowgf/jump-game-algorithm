@@ -1,11 +1,11 @@
-# File Handler project Makefile
+# ALG1-TP1 project Makefile
 # Main Makefile
-# ==============================================================
+# ===============================================================
 #
 # This makefile tries to cover the options of normal compilation 
-# (not really useful in this case), and test compilation, which
-# runs all the tests especified for each class.
-# --------------------------------------------------------------
+#   (not really useful in this case), and test compilation, which
+#   runs all the tests especified for each class.
+# ---------------------------------------------------------------
 #
 # Options:
 #
@@ -13,7 +13,7 @@
 # "TARGET=..." -------------- lets you specify file names
 #
 # clean --------------------- cleaning built files rule
-# --------------------------------------------------------------
+# ---------------------------------------------------------------
 
 # Auxiliary makefiles addresses
 ALL_FILES_VARS     := F_CUSTOM_FUNCTIONS F_GLOBAL_VARS F_VAR_EXPANSION \
@@ -47,13 +47,13 @@ include $(F_CUSTOM_FUNCTIONS)
 include $(F_GLOBAL_VARS)
 
 # Checks definition of global variables.
-# Function from inspection-functions file "i_check_vars" used here.
+# Function from inspection-functions file ~i_check_vars~ used here.
 GLOBAL_VAR_STATUS :=  $(shell $(call i_check_vars, $(GLOBAL_VAR_LIST)))
 temp_status := $(lastword $(GLOBAL_VAR_STATUS))
 ifneq "$(temp_status)" "0"
-  $(call e_fatal, $(temp_status) variaveis globais nao definidas: \
+  $(call e_fatal, $(temp_status) undefined global variables: \
     $(wordlist 1, $(temp_status), $(GLOBAL_VAR_STATUS)). \
-    Verifique arquivo $(F_GLOBAL_VARS))
+    Verify file $(F_GLOBAL_VARS))
 endif
 undefine temp_status
 
@@ -61,4 +61,3 @@ undefine temp_status
 include $(F_VAR_EXPANSION)
 # Informs rules
 include $(F_RULES)
-  

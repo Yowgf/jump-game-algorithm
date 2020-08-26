@@ -1,4 +1,4 @@
-# File Handler project Makefile
+# ALG1-TP1 project Makefile
 # Custom CHECKING functions.
 # ==============================================================
 

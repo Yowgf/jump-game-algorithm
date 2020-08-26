@@ -1,4 +1,4 @@
-# File Handler project Makefile
+# ALG1-TP1 project Makefile
 # Variable expansions Makefile
 # ==============================================================
 
@@ -13,28 +13,26 @@ define C_NL :=
 
 endef
 
-# Adding prefix to directories inside 
-SOURCE_DIRS := HEADER APPLIANCE BUILD
+# Adding prefix to directories inside ~$(SOURCE)~
 $(eval \
-$(foreach src_dir, $(SOURCE_DIRS),\
+$(foreach src_dir, $(SOURCE_VAL_NAMES),\
 override $(src_dir) := $(SOURCE)/$($(src_dir))$(C_NL)) \
 )
 
-vpath %.$(APP_EXTENSION) $(patsubst %, $(APPLIANCE)/%, $(MODULOS))
+vpath %.$(APP_EXTENSION) $(patsubst %, $(APPLIANCE)/%, $(MODULES))
 
-# Lista de diretorios de arquivos compilados
+# Compiled files directory list
 OBJECT_DIRS := $(BUILD)
 
-# A ser usado nas regras de compilacao de objetos e executavel
+# To be used in compilation rules
 ifneq "$(origin, TARGET)" "command line"
   TARGET := $(BUILD)/Main.$(EXECUTABLE_EXTENSION)
 
-  # Procura todos os arquivos com extensao "OBJECT_EXTENSION"
-  APP_FILES    := $(wildcard $(patsubst %, $(APPLIANCE)/%/*.$(APP_EXTENSION), $(MODULOS)))
+  # Searches for files with ~$(OBJECT_EXTENSION)~ extension
+  APP_FILES    := $(wildcard $(patsubst %, $(APPLIANCE)/%/*.$(APP_EXTENSION), $(MODULES)))
   OBJECT_FILES := $(patsubst $(APPLIANCE)%$(APP_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(APP_FILES))
 
 else
-  TARGET := $(BUILD)/$(TARGET)
 
 #! COMPLETAR OBJECT FILES NESSE CASO!!!
 #! Caso de target for um modulo
@@ -51,5 +49,5 @@ LINK_CODE = $(CXX) $(FLAGS) -I $(HEADER) $(OBJECT_FILES) $(patsubst $(BUILD)%$(E
 # For use in creating directories rule
 #-- Do not use "/" in the end!
 #-- Otherwise it won't recognize the directory's existance.
-OBJECT_MOD_DIRS  := $(foreach dir, $(OBJECT_DIRS), $(dir)/$(MODULOS))
-BUILD_MODS       := $(patsubst %, $(BUILD)/%, $(MODULOS))
+OBJECT_MOD_DIRS  := $(foreach dir, $(OBJECT_DIRS), $(dir)/$(MODULES))
+BUILD_MODS       := $(patsubst %, $(BUILD)/%, $(MODULES))

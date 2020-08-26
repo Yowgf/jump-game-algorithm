@@ -1,9 +1,9 @@
-# File Handler project Makefile
+# ALG1-TP1 project Makefile
 # Global variables custom definitions.
 # ==============================================================
 
-GLOBAL_VAR_LIST := CXX FLAGS HEADER APPLIANCE BUILD THIRD_PARTY \
-  MODULOS HEADER_EXTENSION APP_EXTENSION OBJECT_EXTENSION \
+GLOBAL_VAR_LIST := CXX FLAGS HEADER APPLIANCE BUILD \
+  MODULES HEADER_EXTENSION APP_EXTENSION OBJECT_EXTENSION \
   EXECUTABLE_EXTENSION
 
 # Compiler flags
@@ -11,22 +11,21 @@ CXX   := g++
 FLAGS := -std=c++11 -Wall
 
 # Directories
-# Diretorio de arquivos hpp
+SOURCE_VAL_NAMES := HEADER APPLIANCE BUILD
+# Directory of header files
 HEADER      := header
-# Diretorio de arquivos arquivos cpp
+# Directory of appliance files (e.g. ~.cpp~)
 APPLIANCE   := appliance
-# Diretorio de arquivos compilados
+# Directory of compiled files
 BUILD       := build
-# Diretorio de codigo third-party utilizado
-THIRD_PARTY := third-party
 
 # Source directory
 SOURCE := src
 
-# Modulos do programa
-MODULOS := Safety
+# Project's modules
+MODULES := 
 
-# Extensao de arquivos para windows
+# Files extensions
 HEADER_EXTENSION     := hpp
 APP_EXTENSION        := cpp
 OBJECT_EXTENSION     := o
