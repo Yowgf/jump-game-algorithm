@@ -19,20 +19,20 @@ $(BUILD)/%$(OBJECT_EXTENSION) :: $(APPLIANCE)/%$(APP_EXTENSION) $(HEADER)/%$(HEA
 .PHONY : clean
 clean ::
 ifneq "$(origin OBJECT_DIRS)" "file"
-		$(info Variavel para limpeza "OBJECT_DIRS" nao foi definida.)
-		$(info Por favor verifique arquivo em $(GLOBAL_VARS))
+		$(info Variable "OBJECT_DIRS" used for "clean" left undefined.)
+		$(info Please check the file in $(GLOBAL_VARS))
 else
-		$(info Limpando todos os diretorios:)
+		$(info Deleting all the directories and subfolders:)
 		$(info $(OBJECT_DIRS))
 		@echo
-		@echo Tem certeza que quer prosseguir? \(Y/N\)
+		@echo Are you sure? \(Y/N\)
 		@read choice && \
 		if [[ "$$choice" = "y" ]] || [[ "$$choice" = "Y" ]]; then \
 		{ rm --verbose --preserve-root --recursive $(OBJECT_DIRS) && \
-			echo Limpeza bem-sucedida.; } || \
-			$(call e_prev_cmd, Limpeza de algum diretorio falhou.) \
+			echo Cleaning successful.; } || \
+			$(call e_prev_cmd, Cleaning of some directory failed.) \
 		else \
-		echo Limpeza nao executada.; \
+		echo No cleaning was performed.; \
 		fi
 endif
 

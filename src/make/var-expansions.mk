@@ -49,5 +49,5 @@ LINK_CODE = $(CXX) $(FLAGS) -I $(HEADER) $(OBJECT_FILES) $(patsubst $(BUILD)%$(E
 # For use in creating directories rule
 #-- Do not use "/" in the end!
 #-- Otherwise it won't recognize the directory's existance.
-OBJECT_MOD_DIRS  := $(foreach dir, $(OBJECT_DIRS), $(dir)/$(MODULES))
+OBJECT_MOD_DIRS  := $(foreach mod, $(MODULES), $(patsubst %, %/$(mod), $(OBJECT_DIRS)))
 BUILD_MODS       := $(patsubst %, $(BUILD)/%, $(MODULES))

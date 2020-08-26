@@ -10,20 +10,21 @@ GLOBAL_VAR_LIST := CXX FLAGS HEADER APPLIANCE BUILD \
 CXX   := g++
 FLAGS := -std=c++11 -Wall
 
-# Directories
-SOURCE_VAL_NAMES := HEADER APPLIANCE BUILD
+# Source directory
+SOURCE := src
+
+# ~Source~ descendants
+SOURCE_VAL_NAMES := HEADER APPLIANCE
 # Directory of header files
 HEADER      := header
 # Directory of appliance files (e.g. ~.cpp~)
 APPLIANCE   := appliance
+
 # Directory of compiled files
 BUILD       := build
 
-# Source directory
-SOURCE := src
-
 # Project's modules
-MODULES := 
+MODULES := Containers JPI
 
 # Files extensions
 HEADER_EXTENSION     := hpp
