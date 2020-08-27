@@ -37,9 +37,8 @@ endef
 
 FILE_VAR_STATUS := $(shell $(call i_check_files, $(ALL_FILES_VARS)))
 ifneq "$(lastword $(FILE_VAR_STATUS))" "0"
-  $(error Arquivo essencial "$(word 1, $(FILE_VAR_STATUS))" nao encontrado)
+  $(error Essential file "$(word 1, $(FILE_VAR_STATUS))" not found.)
 endif
-
 
 # Informs custom functions
 include $(F_CUSTOM_FUNCTIONS)
