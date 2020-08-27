@@ -29,8 +29,8 @@ ifneq "$(origin, TARGET)" "command line"
   TARGET := $(BUILD)/Main.$(EXECUTABLE_EXTENSION)
 
   # Searches for files with ~$(OBJECT_EXTENSION)~ extension
-  APP_FILES    := $(wildcard $(patsubst %, $(APPLIANCE)/%/*.$(APP_EXTENSION), $(MODULES)))
-  OBJECT_FILES := $(patsubst $(APPLIANCE)%$(APP_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(APP_FILES))
+  HEADER_FILES := $(wildcard $(patsubst %, $(HEADER)/%/*.$(HEADER_EXTENSION), $(MODULES)))
+  OBJECT_FILES := $(wildcard $(patsubst $(HEADER)%$(HEADER_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(HEADER_FILES)))
 
 else
 
