@@ -21,6 +21,11 @@ override $(src_dir) := $(SOURCE)/$($(src_dir))$(C_NL)) \
 
 vpath %.$(APP_EXTENSION) $(patsubst %, $(APPLIANCE)/%, $(MODULES))
 
+# Header files list
+HEADER_FILES := $(wildcard $(patsubst %, $(HEADER)/%/*.$(HEADER_EXTENSION), $(MODULES)))
+# Appliance files list
+APPLIANCE_FILES := $(wildcard $(patsubst %, $(APPLIANCE)/%/*.$(APP_EXTENSION), $(MODULES)))
+
 # Compiled files directory list
 OBJECT_DIRS := $(BUILD)
 
@@ -29,7 +34,7 @@ ifneq "$(origin, TARGET)" "command line"
   TARGET := $(BUILD)/Main.$(EXECUTABLE_EXTENSION)
 
   # Searches for files with ~$(OBJECT_EXTENSION)~ extension
-  HEADER_FILES := $(wildcard $(patsubst %, $(HEADER)/%/*.$(HEADER_EXTENSION), $(MODULES)))
+  
   OBJECT_FILES := $(wildcard $(patsubst $(HEADER)%$(HEADER_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(HEADER_FILES)))
 
 else
@@ -41,10 +46,13 @@ else
 
 endif
 
+# Main file source
+MAIN_FILE = $(patsubst $(BUILD)%$(EXECUTABLE_EXTENSION),$(APPLIANCE)%$(APP_EXTENSION),$(TARGET))
+
 # Command for compiling each object
 COMPIL_OBJECT_CODE = $(CXX) $(FLAGS) -I $(HEADER) -c $< -o $@
 # Links objects
-LINK_CODE = $(CXX) $(FLAGS) -I $(HEADER) $(OBJECT_FILES) $(patsubst $(BUILD)%$(EXECUTABLE_EXTENSION),$(APPLIANCE)%$(APP_EXTENSION),$@) -o $@
+LINK_CODE = $(CXX) $(FLAGS) -I $(HEADER) $(OBJECT_FILES) $(MAIN_FILE) -o $@
 
 # For use in creating directories rule
 #-- Do not use "/" in the end!

@@ -3,7 +3,7 @@
 # ==============================================================
 
 # Links objects. Put first to avoid errors with .DEFAULT_GOAL assignment.
-$(TARGET) : $(BUILD_MODS) $(OBJECT_FILES)
+$(TARGET) : $(MAIN_FILE) $(HEADER_FILES) $(APPLIANCE_FILES) $(BUILD_MODS) $(OBJECT_FILES)
 	$(info Linking code...)
 	$(LINK_CODE)
 
