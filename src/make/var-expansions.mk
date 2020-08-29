@@ -35,7 +35,7 @@ ifneq "$(origin, TARGET)" "command line"
 
   # Searches for files with ~$(OBJECT_EXTENSION)~ extension
   
-  OBJECT_FILES := $(wildcard $(patsubst $(HEADER)%$(HEADER_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(HEADER_FILES)))
+  OBJECT_FILES := $(patsubst $(APPLIANCE)%$(APP_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(APPLIANCE_FILES))
 
 else
 
