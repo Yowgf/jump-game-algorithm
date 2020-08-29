@@ -4,8 +4,10 @@
 // ============================
 //
 // Description:
-// Class that delegates tasks for Containers to
-//   handle.
+// Class that receives the board and players from
+//   ~init~ class, and then executes the game
+//   algorithm at a high level, delegating tasks
+//   to ~Containers~ module.
 /////////////////////////////////////////////////
 
 #ifndef MANAGER_H
@@ -14,7 +16,6 @@
 #include "Containers/board.hpp"
 #include "Containers/player.hpp"
 
-#include <list>
 
 namespace JPI {
 
@@ -25,11 +26,11 @@ struct winner {
 
 class manager {
 private:
-	winner* exec_alg(Containers::board*, std::list<Containers::player*>*);
-	void print_result(winner*);
+	static void print_result(winner*);
+	static winner* exec_alg(Containers::board*, Containers::players*);
 
-public:
-	manager(Containers::board*, std::list<Containers::player*>*);
+public:	
+	manager(Containers::board*, Containers::players*);
 };
 
 }
