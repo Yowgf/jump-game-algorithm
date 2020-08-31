@@ -13,6 +13,8 @@
 #ifndef PLAYERS_H
 #define PLAYERS_H 1
 
+#include "Containers/player.hpp"
+
 namespace Containers {
 
 class players {};
