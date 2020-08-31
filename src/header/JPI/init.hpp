@@ -18,29 +18,38 @@
 
 #include "JPI/manager.hpp"
 
-#include <vector>
+#include <list>
+#include <string>
 #include <utility>
 
 namespace JPI {
 
+const int k_board_dim = 2;
+
+// Auxiliary classes
+class aux_matrix {
+	public:
+	int m, n;
+	std::list<std::string*>* entries;
+
+	~aux_matrix();
+};
+
+class separated_arg {
+public:
+	aux_matrix* board;
+	aux_matrix* players;
+
+	~separated_arg();
+};
+
 class init {
 private:
-	struct m_aux_matrix{
-		int m, n;
-		char** entries;
-	};
+	Containers::board* init_board(aux_matrix*);
+	Containers::players* init_players(aux_matrix*);
 
-	struct m_separated_arg {
-		m_aux_matrix* board;
-		m_aux_matrix* players;
-	};
-
-	Containers::board* init_board(m_aux_matrix*);
-	Containers::players* init_players(m_aux_matrix*);
-
-	void play();
-
-	m_separated_arg*  aux_separate(char** t_argv);
+	std::list<std::string*>* aux_read_entry_file(int t_argc, char** t_argv);
+	separated_arg*  aux_separate(std::list<std::string*>* t_all_entries);
 public:
 	init(int t_argc, char** t_argv);
 	~init();
