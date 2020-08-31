@@ -12,10 +12,20 @@
 
 #include "Containers/Containers.hpp"
 #include "JPI/JPI.hpp"
+#include "Utils/Utils.hpp"
+
+#include <iostream>
 
 int main(int argc, char** argv)
 {
-	// init(argc, argv);
-	return 0;
+	std::cout << "Comecamos o programa" << std::endl;
+	
+	try {
+		JPI::init(argc, argv);
+	}
+	catch(std::invalid_argument& e) {
+		Utils::error(e, "Fatal");
+	}
 
+	return 0;
 }
