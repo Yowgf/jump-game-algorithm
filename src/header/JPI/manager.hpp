@@ -14,6 +14,7 @@
 #define MANAGER_H 1
 
 #include "Containers/board.hpp"
+#include "Containers/players.hpp"
 #include "Containers/player.hpp"
 
 
