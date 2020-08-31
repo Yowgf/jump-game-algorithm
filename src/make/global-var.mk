@@ -24,7 +24,7 @@ APPLIANCE   := appliance
 BUILD       := build
 
 # Project's modules
-MODULES := Containers JPI
+MODULES := Containers JPI Utils
 
 # Files extensions
 HEADER_EXTENSION     := hpp
