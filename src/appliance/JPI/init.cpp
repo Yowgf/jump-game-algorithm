@@ -19,19 +19,6 @@
 
 namespace JPI {
 
-//~
-aux_matrix::~aux_matrix()
-{
-	delete entries;
-}
-
-//~
-separated_arg::~separated_arg()
-{
-	delete board;
-	delete players;
-}
-
 //-
 init::init(int t_argc, char** t_argv)
 {
@@ -39,7 +26,7 @@ init::init(int t_argc, char** t_argv)
 	std::cout << "Vamos entrar na funcao!!!" << std::endl;
 	
 	std::list<std::string*>* all_entries = aux_read_entry_file(t_argc, t_argv);
-	separated_arg* separated_entries = aux_separate(all_entries);
+	aux_separated_arg* separated_entries = aux_separate(all_entries);
 	
 	Containers::board* board = init_board(separated_entries->board);
 	Containers::players* players = init_players(separated_entries->players);
@@ -58,9 +45,9 @@ init::~init()
 {}
 
 //-
-Containers::board* init::init_board(aux_matrix*)
+Containers::board* init::init_board(aux_matrix* t_board_lines)
 {
-	return new Containers::board();
+	//return new Containers::board(t_board_lines);
 }
 
 //-
@@ -108,9 +95,9 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 }
 
 //:D
-separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
+aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 {
-	separated_arg* sep_arg = new separated_arg();
+	aux_separated_arg* sep_arg = new aux_separated_arg();
 
 	sep_arg->board = new aux_matrix();
 	sep_arg->players = new aux_matrix();

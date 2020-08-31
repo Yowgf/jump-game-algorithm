@@ -12,9 +12,15 @@
 #ifndef BOARD_H
 #define BOARD_H 1
 
+#include "JPI/aux_matrix.hpp"
+
 namespace Containers {
 
-class board {};
+class board {
+
+public:
+	board(JPI::aux_matrix* t_board_lines);
+};
 
 }
 
