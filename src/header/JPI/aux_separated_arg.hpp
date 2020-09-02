@@ -19,6 +19,7 @@ public:
 	aux_matrix* board;
 	aux_matrix* players;
 
+	aux_separated_arg();
 	~aux_separated_arg();
 };
 

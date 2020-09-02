@@ -17,9 +17,10 @@ namespace JPI {
 
 class aux_matrix {
 	public:
-	int m, n;
+	unsigned int m, n;
 	std::list<std::string*>* entries;
 
+	aux_matrix();
 	~aux_matrix();
 };
 

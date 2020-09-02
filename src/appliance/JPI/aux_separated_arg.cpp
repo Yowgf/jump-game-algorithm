@@ -9,9 +9,18 @@
 
 #include "JPI/aux_separated_arg.hpp"
 
+#include <iostream>
+
 namespace JPI {
 
-//~
+//:D
+aux_separated_arg::aux_separated_arg()
+{
+	board = new aux_matrix();
+	players = new aux_matrix();
+}
+
+//:D
 aux_separated_arg::~aux_separated_arg()
 {
 	delete board;
