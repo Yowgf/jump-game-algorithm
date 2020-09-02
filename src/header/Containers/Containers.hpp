@@ -11,8 +11,8 @@
 //   simplify the importing procedure.
 /////////////////////////////////////////////////
 
-#ifndef Containers_H
-#define Containers_H 1
+#ifndef CONTAINERS_H
+#define CONTAINERS_H 1
 
 #include "Containers/board.hpp"
 #include "Containers/player.hpp"
