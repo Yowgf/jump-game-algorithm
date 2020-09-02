@@ -19,7 +19,7 @@
 
 namespace JPI {
 
-//-
+//~
 init::init(int t_argc, char** t_argv)
 {
 	
@@ -31,29 +31,33 @@ init::init(int t_argc, char** t_argv)
 	Containers::board* board = init_board(separated_entries->board);
 	Containers::players* players = init_players(separated_entries->players);
 	
+	std::cout << "Initialized board and players!" << std::endl;
+
 	delete separated_entries; // No need to keep memory allocated
 
 	manager(board, players);
 
 	delete players;
 	delete board;
-	
+
+	std::cout << "Deleted everything!" << std::endl;
+	std::cout << "Returning to main..." << std::endl;
 }
 
 //-
 init::~init()
 {}
 
-//-
+//:D
 Containers::board* init::init_board(aux_matrix* t_board_lines)
 {
-	//return new Containers::board(t_board_lines);
+	return new Containers::board(t_board_lines);
 }
 
-//-
-Containers::players* init::init_players(aux_matrix*)
+//:D
+Containers::players* init::init_players(aux_matrix* t_players_lines)
 {
-	return new Containers::players();
+	return new Containers::players(t_players_lines);
 }
 
 //:D
@@ -75,7 +79,6 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 	std::list<std::string*>* lines = new std::list<std::string*>();
 
 	// Actual file reading (line by line)
-	register int i = 0;
 	char char_medium[256];
 	while(!entry_file.eof()) {
 		entry_file.getline(char_medium, 256);
@@ -84,9 +87,8 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 
 		lines->push_back(new std::string(char_medium));
 		std::cout << *(lines->back()) << std::endl;
-
-		i++;
 	}
+
 	std::cout << "Ended file reading..." << std::endl;
 
 	entry_file.close();
@@ -98,20 +100,22 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 {
 	aux_separated_arg* sep_arg = new aux_separated_arg();
+	aux_matrix* board = sep_arg->board;
+	aux_matrix* players = sep_arg->players;
 
-	sep_arg->board = new aux_matrix();
-	sep_arg->players = new aux_matrix();
+	if(board->entries == nullptr || players->entries == nullptr)
+		throw std::invalid_argument("Aux_matrix entries not initialized");
 
 	// Variables used to make transition
-	int m = 0, n = 0, k = 0;
+	unsigned int m = 0, n = 0, k = 0;
 	std::stringstream ss;
 	
 	// Acquiring m and n
 	ss.str(*(t_lines->front()));
 	t_lines->pop_front();
 	ss >> m >> n;
-	sep_arg->board->m = m;
-	sep_arg->board->n = n;
+	board->m = m;
+	board->n = n;
 
 	ss.clear();
 
@@ -119,16 +123,15 @@ aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	ss.str(*(t_lines->front()));
 	t_lines->pop_front();
 	ss >> k;
-	sep_arg->players->m = k;
-	sep_arg->players->n = k_board_dim;
+	players->m = k;
+	players->n = k_board_dim;
 
 	ss.clear();
 
 
 	std::cout << "Starting to mess with matrices... " << std::endl;
 	// Setting board strings
-	std::list<std::string*>* local_entries = sep_arg->board->entries;
-	local_entries = new std::list<std::string*>();
+	std::list<std::string*>* local_entries = board->entries;
 	std::list<std::string*>::iterator local_it = local_entries->begin(),
                                     lines_itf = t_lines->begin(),
                                     lines_ite = t_lines->begin();
@@ -143,8 +146,7 @@ aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	}
 	
 	// Setting players strings
-	local_entries = sep_arg->players->entries;
-	local_entries = new std::list<std::string*>();
+	local_entries = players->entries;
 	local_it = local_entries->begin();
 	lines_itf = lines_ite;
 	std::advance(lines_ite, k);
@@ -152,7 +154,7 @@ aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 
 	std::cout << "Players lines: " << local_entries->size() << std::endl;
 	std::cout << "Lines left: " << t_lines->size() << std::endl;
-	// Print board
+	// Print players
 	for(local_it = local_entries->begin(); local_it != local_entries->end(); local_it++) {
 		std::cout << **local_it << std::endl;
 	}

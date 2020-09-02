@@ -26,7 +26,7 @@
 
 namespace JPI {
 
-const int k_board_dim = 2;
+const unsigned int k_board_dim = 2;
 
 class init {
 private:
@@ -35,6 +35,7 @@ private:
 
 	std::list<std::string*>* aux_read_entry_file(int t_argc, char** t_argv);
 	aux_separated_arg*  aux_separate(std::list<std::string*>* t_all_entries);
+
 public:
 	init(int t_argc, char** t_argv);
 	~init();
