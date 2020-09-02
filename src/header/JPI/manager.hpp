@@ -16,19 +16,14 @@
 #include "Containers/board.hpp"
 #include "Containers/players.hpp"
 #include "Containers/player.hpp"
-
+#include "Containers/winner.hpp"
 
 namespace JPI {
 
-struct winner {
-	Containers::player* pl;
-	int round;
-};
-
 class manager {
 private:
-	static void print_result(winner*);
-	static winner* exec_alg(Containers::board*, Containers::players*);
+	static void print_result(Containers::winner*);
+	static void exec_alg(Containers::board*, Containers::players*);
 
 public:	
 	manager(Containers::board*, Containers::players*);
