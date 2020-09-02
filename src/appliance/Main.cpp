@@ -26,6 +26,9 @@ int main(int argc, char** argv)
 	catch(std::invalid_argument& e) {
 		Utils::error(e, "Fatal");
 	}
+	catch(std::exception& e) {
+		Utils::error(e, "Fatal");
+	}
 
 	return 0;
 }
