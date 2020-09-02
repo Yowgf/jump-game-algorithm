@@ -5,9 +5,8 @@
 //
 // Description:
 // Class that implements the set of all players
-//   currently active in the game. Provides
-//   manipulation routines that involve the all
-//   the players.
+//   currently active in the game. Simply a list
+//   of ~players~.
 /////////////////////////////////////////////////
 
 #ifndef PLAYERS_H
@@ -15,9 +14,19 @@
 
 #include "Containers/player.hpp"
 
+#include "JPI/aux_matrix.hpp"
+
 namespace Containers {
 
-class players {};
+class players {
+private:
+	unsigned int m, n;
+	std::list<player*>* m_players;
+
+public:
+	players(JPI::aux_matrix*);
+	~players();
+};
 
 }
 
