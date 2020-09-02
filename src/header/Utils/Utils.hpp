@@ -6,14 +6,26 @@
 // Description:
 // Bounds the classes belonging to the Utils module
 //   in this single header file.
-// This is to be used by code outside of the
-//   scope of the module only, as a way to
-//   simplify the importing procedure.
+// Also implements universal Utils functions
 /////////////////////////////////////////////////
 
 #ifndef UTILS_H
 #define UTILS_H 1
 
 #include "Utils/error.hpp"
+
+#include "JPI/aux_matrix.hpp"
+
+#include <list>
+
+namespace Utils {
+
+// Converts entries inside the aux_matrix to an 
+//   integer representation, for use in
+//   constructor of classes ~board~ and
+//   ~players~.
+std::list<unsigned int>* aux_str_to_int(JPI::aux_matrix*);
+
+}
 
 #endif
