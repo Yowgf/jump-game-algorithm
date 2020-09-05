@@ -16,7 +16,6 @@
 #define BOARD_H 1
 
 #include "Containers/node.hpp"
-#include "Containers/player.hpp"
 #include "Utils/aux_matrix.hpp"
 
 #include <vector>

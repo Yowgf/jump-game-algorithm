@@ -13,7 +13,6 @@
 #define PLAYERS_H 1
 
 #include "Containers/player.hpp"
-
 #include "Utils/aux_matrix.hpp"
 
 namespace Containers {

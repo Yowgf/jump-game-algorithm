@@ -23,6 +23,8 @@ aux_separated_arg::aux_separated_arg()
 //:D
 aux_separated_arg::~aux_separated_arg()
 {
+	// These are just the aux_matrices, not the actual
+	//   board and players classes objects.
 	delete board;
 	delete players;
 }

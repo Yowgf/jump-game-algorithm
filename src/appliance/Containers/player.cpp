@@ -15,8 +15,6 @@
 
 #include "Containers/player.hpp"
 
-#include "Containers/board.hpp"
-
 namespace Containers {
 
 //:D

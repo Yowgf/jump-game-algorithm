@@ -18,11 +18,9 @@
 
 #include "Utils/aux_matrix.hpp"
 #include "Utils/aux_separated_arg.hpp"
-#include "JPI/manager.hpp"
 
 #include <list>
 #include <string>
-#include <utility>
 
 namespace JPI {
 

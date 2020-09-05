@@ -9,8 +9,9 @@
 // The edges of every node are contained here.
 /////////////////////////////////////////////////
 
-#include "Containers/board.hpp"
 #include "Containers/node.hpp"
+
+#include "Containers/board.hpp"
 
 #include <iostream>
 

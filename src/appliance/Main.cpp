@@ -14,18 +14,12 @@
 #include "JPI/JPI.hpp"
 #include "Utils/Utils.hpp"
 
-#include <iostream>
+#include <stdexcept>
 
 int main(int argc, char** argv)
 {
-	//std::cout << "Comecamos o programa" << std::endl;
-	
 	try {
 		JPI::init(argc, argv);
-		//std::cout << "Returning to main..." << std::endl;
-	}
-	catch(std::invalid_argument& e) {
-		Utils::error(e, "Fatal");
 	}
 	catch(std::exception& e) {
 		Utils::error(e, "Fatal");

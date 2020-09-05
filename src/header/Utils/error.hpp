@@ -11,7 +11,7 @@
 #ifndef ERROR_H
 #define ERROR_H 1
 
-#include <exception>
+#include <stdexcept>
 #include <string>
 
 namespace Utils {

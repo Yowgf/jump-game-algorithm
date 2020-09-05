@@ -12,6 +12,8 @@
 
 #include "JPI/init.hpp"
 
+#include "JPI/manager.hpp"
+
 #include <exception>
 #include <fstream>
 #include <iostream>
