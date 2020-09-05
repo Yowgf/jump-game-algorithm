@@ -15,14 +15,15 @@
 
 #include "Containers/board.hpp"
 #include "Containers/players.hpp"
-#include "Containers/player.hpp"
-#include "Containers/winner.hpp"
 
 namespace JPI {
 
 class manager {
 private:
-	static void print_result(Containers::winner*);
+	// Print the winner's name and the round
+	static void print_result(Containers::player*, unsigned int);
+
+	// Main project's algorithm
 	static void exec_alg(Containers::board*, Containers::players*);
 
 public:	

@@ -14,8 +14,10 @@
 #ifndef CONTAINERS_H
 #define CONTAINERS_H 1
 
+#include "Containers/bfs.hpp"
 #include "Containers/board.hpp"
-#include "Containers/player.hpp"
+#include "Containers/node.hpp"
 #include "Containers/players.hpp"
+#include "Containers/player.hpp"
 
 #endif

@@ -19,26 +19,36 @@
 namespace Containers {
 
 //:D
-players::players(JPI::aux_matrix* t_players_lines)
+players::players(Utils::aux_matrix* t_players_lines)
 {
 	if(t_players_lines == nullptr)
 		throw std::invalid_argument("players constructor nullptr t_players_lines");
 
-	std::cout << "Starting players constructor" << std::endl;
+	//std::cout << "Starting players constructor" << std::endl;
+
+	// m_cur_winners
+	m_cur_winners = new std::list<player*>();
+	// m_cur_winner_mov
+	m_cur_winner_mov = -1;
+
+	// m_players
+	m_players = new std::list<player*>();
 
 	// m and n
 	m = t_players_lines->m;
 	n = t_players_lines->n;
 
-	// m_players
+	if(m == 0 || n == 0)
+		return;
+
+	// m_players initialization process
 	// Converting entries in "entries" to integers
 	std::list<unsigned int>* l_int_entries = Utils::aux_str_to_int(t_players_lines);
 	if(l_int_entries == nullptr || l_int_entries->size() != m * n)
 		throw std::runtime_error("Malformed l_int_entries");
 
-	std::cout << "Generated l_int_entries" << std::endl;
+	//std::cout << "Generated l_int_entries" << std::endl;
 
-	m_players = new std::list<player*>();
 	// Loop variables
 	register unsigned int i = 0;
 	unsigned int l_x = 0, l_y = 0;
@@ -48,12 +58,13 @@ players::players(JPI::aux_matrix* t_players_lines)
 		l_y = l_int_entries->front();
 		l_int_entries->pop_front();
 
-		std::cout << "Making player of positions: x = " << l_x << ", y = " << l_y << std::endl;
+		//std::cout << "Making player of positions: x = " << l_x << ", y = " << l_y << std::endl;
 
 		m_players->push_back(new player(i, l_x, l_y));
 	}
 	
 	delete l_int_entries;
+
 
 }
 
@@ -67,6 +78,68 @@ players::~players()
 		}
 
 	delete m_players;
+	delete m_cur_winners;
+}
+
+//:D
+void players::add_winner(player* t_new_winner)
+{
+	if(t_new_winner == nullptr)
+		throw std::invalid_argument("players::set_winner nullptr t_new_winner");
+	
+	m_cur_winners->push_back(t_new_winner);
+	m_cur_winner_mov = t_new_winner->get_final_mov();
+}
+
+//:D
+void players::clear_winners() {
+	m_cur_winners->clear();
+}
+
+//:D
+unsigned int players::get_winner_mov()
+{
+	return m_cur_winner_mov;
+}
+
+//:D
+player* players::get_abs_winner()
+{
+	// No winner at all!
+	if(m_cur_winners->empty())
+		return nullptr;
+
+	//std::cout << "Searching for absolute winner" << std::endl;
+	//std::cout << "We currently have " << m_cur_winners->size() << " possible winners" << std::endl;
+	
+	player* winner = m_cur_winners->front();
+	unsigned int min_id = winner->get_id();
+	// Start iterator from second position
+	std::list<player*>::iterator it = m_cur_winners->begin();
+	it++;
+	while(it != m_cur_winners->end()) {
+		if((*it)->get_id() < min_id) {
+			winner = *it;
+			min_id = winner->get_id();
+		}
+		it++;
+	}
+
+	return winner;
+}
+
+//:D
+player* players::pop_front()
+{
+	player* l_front_player = m_players->front();
+	m_players->pop_front();
+	return l_front_player;
+}
+
+//:D
+bool players::empty()
+{
+	return m_players == nullptr ? false : m_players->empty();
 }
 
 }

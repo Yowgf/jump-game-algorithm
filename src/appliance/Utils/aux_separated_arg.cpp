@@ -1,5 +1,5 @@
 // ALG1-TP1 project appliance file
-// JPI module
+// Utils module
 // Auxiliary separated argument
 // ============================
 //
@@ -7,11 +7,11 @@
 // Class that facilitates argument passing
 /////////////////////////////////////////////////
 
-#include "JPI/aux_separated_arg.hpp"
+#include "Utils/aux_separated_arg.hpp"
 
 #include <iostream>
 
-namespace JPI {
+namespace Utils {
 
 //:D
 aux_separated_arg::aux_separated_arg()

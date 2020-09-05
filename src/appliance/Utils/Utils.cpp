@@ -9,21 +9,24 @@
 
 #include "Utils/Utils.hpp"
 
+#include <iostream>
+#include <stdexcept>
 #include <sstream>
 
 namespace Utils {
 
 //:D
-std::list<unsigned int>* aux_str_to_int(JPI::aux_matrix* t_uncut_strs)
+std::list<unsigned int>* aux_str_to_int(aux_matrix* t_uncut_strs)
 {
 	if(t_uncut_strs == nullptr)
-		throw std::invalid_argument("aux_str_to_int nullptr argument.");
+		throw std::invalid_argument("aux_str_to_int nullptr t_uncut_strs.");
 
 	// Useful variables
 	unsigned int l_cur_int = 0;
 	std::stringstream l_ss;
 	std::list<std::string*>* l_str_lines = t_uncut_strs->entries;
 
+	//std::cout << "l_str_lines size " << l_str_lines->size() << std::endl;
 	// Return variable, integer representation of entry strings
 	std::list<unsigned int>* int_rep = new std::list<unsigned int>();
 	

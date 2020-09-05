@@ -22,112 +22,186 @@
 namespace Containers {
 
 //:D
-std::list<node*>* board::aux_fetch_edges(unsigned int t_pos, unsigned int t_mov_len)
+void board::aux_fetch_edges(node* t_node)
 {
-	if(t_pos >= m_positions->size())
-		throw std::invalid_argument("aux_fetch_edges invalid t_pos");
-	// Return variable
-	std::list<node*>* edges = new std::list<node*>();
+	register unsigned int l_cur_pos = t_node->get_pos();
+	register unsigned int l_cur_mov = t_node->get_mov();
+	if(l_cur_pos >= m_positions->size())
+		throw std::invalid_argument("aux_fetch_edges invalid l_cur_pos");
+
+	//std::cout << "Fetching edges for node " << l_cur_pos << std::endl;
 
 	// Useful variables
-	unsigned int l_pos_x = t_pos % n;
-	unsigned int l_pos_y = t_pos / n;
+	std::list<node*>* l_cur_out_edges = t_node->get_out_edges();
 
-	std::cout << "Node " << t_pos << " with x and y: " << l_pos_x << ' ' << l_pos_y << std::endl;
-	// Left movement
-	int l_new_pos = l_pos_x - t_mov_len;
-	if(l_new_pos > 0)
-		edges->push_back(get_node(t_pos - t_mov_len));
-	// Right movement
-	l_new_pos = l_pos_x + t_mov_len;
-	if((unsigned int)l_new_pos < n)
-		edges->push_back(get_node(t_pos + t_mov_len));
-	// Up movement
-	l_new_pos = l_pos_y - t_mov_len;
-	if(l_new_pos > 0)
-		edges->push_back(get_node(t_pos - t_mov_len * n));
-	// Down movement
-	l_new_pos = l_pos_y + t_mov_len;
-	if((unsigned int)l_new_pos < m)
-		edges->push_back(get_node(t_pos + t_mov_len * n));
+	// Useful variables
+	unsigned int l_pos_x = l_cur_pos % n;
+	unsigned int l_pos_y = l_cur_pos / n;
 
-	std::cout << "Finished fetching edges." << std::endl;
-	
-	if(edges->empty()){
-		delete edges;
-		return nullptr;
+	if(l_cur_mov > 0) {
+		// l_new_pos is ~int~ to be able to make comparisons
+		//   (unsigned int would bug really hard...)
+		int l_new_pos = l_pos_x - l_cur_mov;
+		unsigned int l_new_def_pos = 0;
+		node* l_cur_next_node = nullptr;
+		
+		// Left movement
+		if(l_new_pos >= 0) {
+			l_new_def_pos = l_cur_pos - l_cur_mov;
+			l_cur_next_node = get_node(l_new_def_pos);
+			if(l_cur_mov != l_cur_next_node->get_mov()) {
+				//std::cout << "Adding new in edge to " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
+				l_cur_next_node->get_in_edges()->push_back(t_node);
+			}
+			l_cur_out_edges->push_back(l_cur_next_node);
+		}
+		// Right movement
+		l_new_pos = l_pos_x + l_cur_mov;
+		if((unsigned int)l_new_pos < n) {
+			l_new_def_pos = l_cur_pos + l_cur_mov;
+			l_cur_next_node = get_node(l_new_def_pos);
+			if(l_cur_mov != l_cur_next_node->get_mov()) {
+				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
+				l_cur_next_node->get_in_edges()->push_back(t_node);
+			}
+			l_cur_out_edges->push_back(l_cur_next_node);
+		}
+		// Up movement
+		l_new_pos = l_pos_y - l_cur_mov;
+		if(l_new_pos >= 0) {
+			l_new_def_pos = l_cur_pos - l_cur_mov * n;
+			l_cur_next_node = get_node(l_new_def_pos);
+			if(l_cur_mov != l_cur_next_node->get_mov()) {
+				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
+				l_cur_next_node->get_in_edges()->push_back(t_node);
+			}
+			l_cur_out_edges->push_back(l_cur_next_node);
+		}
+		// Down movement
+		l_new_pos = l_pos_y + l_cur_mov;
+		if((unsigned int)l_new_pos < m) {
+			l_new_def_pos = l_cur_pos + l_cur_mov * n;
+			l_cur_next_node = get_node(l_new_def_pos);
+			if(l_cur_mov != l_cur_next_node->get_mov()) {
+				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
+				l_cur_next_node->get_in_edges()->push_back(t_node);
+			}
+			l_cur_out_edges->push_back(l_cur_next_node);
+		}
+		
 	}
-	
-	return edges;
+
+	if(l_cur_out_edges != nullptr) {
+
+	}
+	else
+		//std::cout << "No edges found." << std::endl;
+
+	return;
 }
 
 //:D
-board::board(JPI::aux_matrix* t_board_lines)
+board::board(Utils::aux_matrix* t_board_lines)
 {
 	if(t_board_lines == nullptr)
 		throw std::invalid_argument("board constructor nullptr t_board_lines");
-
-	std::cout << "Starting board constructor" << std::endl;
 
 	// m and n
 	m = t_board_lines->m;
 	n = t_board_lines->n;
 
+	m_positions = new std::vector<node*>(m * n, nullptr);
+	if(m == 0 || n == 0) {
+			m_finish_line = nullptr;
+			return;
+	}
+
 	// m_positions
 	// Converting entries in "entries" to integers
 	std::list<unsigned int>* l_int_entries = Utils::aux_str_to_int(t_board_lines);
+	//std::cout << "int_entries_size: " << l_int_entries->size() << std::endl;
 	if(l_int_entries == nullptr || l_int_entries->size() != m * n)
 		throw std::runtime_error("Malformed l_int_entries");
 
-	std::cout << "Generated l_int_entries" << std::endl;
+	//std::cout << "Generated l_int_entries" << std::endl;
 
-	// Smoothly mounting m_positions
-	m_positions = new std::vector<node*>(m * n, nullptr);
 	unsigned int i = 0;
 	unsigned int l_cur_mov_len = 0;
-	std::list<node*>* l_cur_edges = nullptr;
-	std::vector<node*>::iterator pos_it = m_positions->begin();
-	for(; pos_it != m_positions->end(); pos_it++, i++) {
+	std::vector<node*>::iterator pos_it;
+	// Smoothly mounting m_positions
+	// First initializing nodes, so that we can have a reference when 
+	//   generating edges with aux_fetch_edges
+	for(pos_it = m_positions->begin(), i = 0; pos_it != m_positions->end(); pos_it++, i++) {
+		*pos_it = new node();
+		(*pos_it)->set_pos(i);
 		l_cur_mov_len = l_int_entries->front();
-		l_cur_edges = aux_fetch_edges(i, l_cur_mov_len);
-		*pos_it = new node(l_cur_edges);
 		l_int_entries->pop_front();
+		(*pos_it)->set_mov(l_cur_mov_len);
 	}
-
-	// m_finish_line
-	m_finish_line = m_positions->back();
+	//std::cout << std::endl;
+	// Must be done separately
+	for(pos_it = m_positions->begin(); pos_it != m_positions->end(); pos_it++) {
+		aux_fetch_edges(*pos_it);
+	}
 	
 	delete l_int_entries;
+
+	//std::cout << "m = " << m << " n = " << n << std::endl;
+
+	// m_finish_line
+	// has to be done after the making of the m_positions vector...
+	//std::cout << "Set finish line to be " << get_pos(m_finish_line) << std::endl;
+	m_finish_line = m_positions->back();
 }
 
 //:D
 board::~board()
 {
+	//std::cout << "Trying to delete the board..." << std::endl;
+	register unsigned int i = 0;
 	std::vector<node*>::iterator it = m_positions->begin();
 	while(it != m_positions->end()) {
+		//std::cout << "Deleting node " << i << std::endl;
 		delete *it;
+		i++;
 		it++;
 	}
+
+	m_positions->clear();
 	delete m_positions;
+
+}
+
+//:D
+unsigned int board::get_m()
+{
+	return m;
+}
+
+//:D
+unsigned int board::get_n()
+{
+	return n;
 }
 
 //:D
 node* board::get_node(unsigned int t_pos)
 {
-	if(t_pos >= m_positions->size())
-		throw std::out_of_range(std::string("Trying to get invalid node ") += std::to_string(t_pos));
-
-	return m_positions->at(t_pos);
+	try {
+		return m_positions->at(t_pos);
+	} catch(std::out_of_range& e) {
+		return nullptr;
+	}
 }
 
 //:D
 node* board::get_node(unsigned int t_x, unsigned int t_y)
 {
-	if(t_x >= m || t_y >= n)
-		throw std::invalid_argument(std::string("Trying to get invalid node: x = ")
-			+= std::to_string(t_x) += std::string(", y = ") += std::to_string(t_y));
-
-	return m_positions->at(t_x * n + t_y);
+	try {
+		return m_positions->at(t_x * n + t_y);
+	} catch(std::out_of_range& e) {
+		return nullptr;
+	}
 }
 
 //:D
@@ -136,6 +210,11 @@ node* board::get_finish_line()
 	return m_finish_line;
 }
 
+//:D
+bool board::empty()
+{
+	return m == 0 || n == 0;
+}
 
 }
 

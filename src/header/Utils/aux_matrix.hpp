@@ -1,5 +1,5 @@
 // ALG1-TP1 project header file
-// JPI module
+// Utils module
 // Auxiliary matrix
 // ============================
 //
@@ -13,7 +13,7 @@
 #include <list>
 #include <string>
 
-namespace JPI {
+namespace Utils {
 
 class aux_matrix {
 	public:

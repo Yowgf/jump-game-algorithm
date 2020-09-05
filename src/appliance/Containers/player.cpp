@@ -25,6 +25,21 @@ player::player(unsigned int t_id, unsigned int t_x, unsigned int t_y)
 	m_id = t_id;
 	m_x = t_x;
 	m_y = t_y;
+
+	m_finalist = false;
+	m_final_movement = -1;
+}
+
+//:D
+void player::set_finalist(bool t_is_finalist)
+{
+	m_finalist = t_is_finalist;
+}
+
+//:D
+void player::set_final_mov(unsigned int t_final_mov)
+{
+	m_final_movement = t_final_mov;
 }
 
 //:D
@@ -43,6 +58,18 @@ unsigned int player::get_x()
 unsigned int player::get_y()
 {
 	return m_y;
+}
+
+//:D
+bool player::is_finalist()
+{
+	return m_finalist;
+}
+
+//:D
+unsigned int player::get_final_mov()
+{
+	return m_final_movement;
 }
 
 }

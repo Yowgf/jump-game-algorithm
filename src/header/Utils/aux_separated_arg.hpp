@@ -1,5 +1,5 @@
 // ALG1-TP1 project header file
-// JPI module
+// Utils module
 // Auxiliary separated argument
 // ============================
 //
@@ -10,9 +10,9 @@
 #ifndef AUX_SEPARATED_ARG
 #define AUX_SEPARATED_ARG 1
 
-#include "JPI/aux_matrix.hpp"
+#include "Utils/aux_matrix.hpp"
 
-namespace JPI {
+namespace Utils {
 
 class aux_separated_arg {
 public:

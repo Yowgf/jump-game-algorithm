@@ -12,11 +12,9 @@
 #ifndef UTILS_H
 #define UTILS_H 1
 
+#include "Utils/aux_matrix.hpp"
+#include "Utils/aux_separated_arg.hpp"
 #include "Utils/error.hpp"
-
-#include "JPI/aux_matrix.hpp"
-
-#include <list>
 
 namespace Utils {
 
@@ -24,7 +22,7 @@ namespace Utils {
 //   integer representation, for use in
 //   constructor of classes ~board~ and
 //   ~players~.
-std::list<unsigned int>* aux_str_to_int(JPI::aux_matrix*);
+std::list<unsigned int>* aux_str_to_int(aux_matrix*);
 
 }
 

@@ -14,7 +14,6 @@
 #ifndef JPI_H
 #define JPI_H 1
 
-#include "JPI/interface.hpp"
 #include "JPI/init.hpp"
 #include "JPI/manager.hpp"
 
