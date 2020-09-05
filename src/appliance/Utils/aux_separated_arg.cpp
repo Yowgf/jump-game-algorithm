@@ -9,8 +9,6 @@
 
 #include "Utils/aux_separated_arg.hpp"
 
-#include <iostream>
-
 namespace Utils {
 
 //:D

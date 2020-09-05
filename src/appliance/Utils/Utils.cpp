@@ -9,7 +9,6 @@
 
 #include "Utils/Utils.hpp"
 
-#include <iostream>
 #include <stdexcept>
 #include <sstream>
 
@@ -26,7 +25,6 @@ std::list<unsigned int>* aux_str_to_int(aux_matrix* t_uncut_strs)
 	std::stringstream l_ss;
 	std::list<std::string*>* l_str_lines = t_uncut_strs->entries;
 
-	//std::cout << "l_str_lines size " << l_str_lines->size() << std::endl;
 	// Return variable, integer representation of entry strings
 	std::list<unsigned int>* int_rep = new std::list<unsigned int>();
 	

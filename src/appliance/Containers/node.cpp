@@ -13,8 +13,6 @@
 
 #include "Containers/board.hpp"
 
-#include <iostream>
-
 namespace Containers {
 
 //:D

@@ -13,7 +13,6 @@
 
 #include "Utils/Utils.hpp" // aux_str_to_int
 
-#include <iostream>
 #include <stdexcept>
 
 namespace Containers {
@@ -23,8 +22,6 @@ players::players(Utils::aux_matrix* t_players_lines)
 {
 	if(t_players_lines == nullptr)
 		throw std::invalid_argument("players constructor nullptr t_players_lines");
-
-	//std::cout << "Starting players constructor" << std::endl;
 
 	// m_cur_winners
 	m_cur_winners = new std::list<player*>();
@@ -47,8 +44,6 @@ players::players(Utils::aux_matrix* t_players_lines)
 	if(l_int_entries == nullptr || l_int_entries->size() != m * n)
 		throw std::runtime_error("Malformed l_int_entries");
 
-	//std::cout << "Generated l_int_entries" << std::endl;
-
 	// Loop variables
 	register unsigned int i = 0;
 	unsigned int l_x = 0, l_y = 0;
@@ -57,8 +52,6 @@ players::players(Utils::aux_matrix* t_players_lines)
 		l_int_entries->pop_front();
 		l_y = l_int_entries->front();
 		l_int_entries->pop_front();
-
-		//std::cout << "Making player of positions: x = " << l_x << ", y = " << l_y << std::endl;
 
 		m_players->push_back(new player(i, l_x, l_y));
 	}
@@ -106,9 +99,6 @@ player* players::get_abs_winner()
 	// No winner at all!
 	if(m_cur_winners->empty())
 		return nullptr;
-
-	//std::cout << "Searching for absolute winner" << std::endl;
-	//std::cout << "We currently have " << m_cur_winners->size() << " possible winners" << std::endl;
 
 	player* winner = m_cur_winners->front();
 	unsigned int min_id = winner->get_id();

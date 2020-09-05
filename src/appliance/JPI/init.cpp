@@ -16,7 +16,6 @@
 
 #include <exception>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 
 namespace JPI {
@@ -60,7 +59,6 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 			" arguments provided\nProgram usage: $(program) $(input_file).\n");
 
 	char* file_name = t_argv[1];
-	//std::cout << "file_name = " << file_name << std::endl;
 	std::fstream entry_file(file_name);
 
 	if(!entry_file)
@@ -77,10 +75,7 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 			break;
 
 		lines->push_back(new std::string(char_medium));
-		//std::cout << *(lines->back()) << std::endl;
 	}
-
-	//std::cout << "Ended file reading..." << std::endl;
 
 	entry_file.close();
 
@@ -119,7 +114,6 @@ Utils::aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 
 	ss.clear();
 
-	//std::cout << "Starting to mess with matrices... " << std::endl;
 	// Setting board strings
 	std::list<std::string*>* local_entries = board->entries;
 	std::list<std::string*>::iterator local_it = local_entries->begin(),
@@ -128,26 +122,12 @@ Utils::aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	std::advance(lines_ite, m);
 	local_entries->splice(local_it, *t_lines, lines_itf, lines_ite);
 
-	//std::cout << "Board lines: " << local_entries->size() << std::endl;
-	//std::cout << "Lines left: " << t_lines->size() << std::endl;
-	// Print board
-	for(local_it = local_entries->begin(); local_it != local_entries->end(); local_it++) {
-		//std::cout << **local_it << std::endl;
-	}
-
 	// Setting players strings
 	local_entries = players->entries;
 	local_it = local_entries->begin();
 	lines_itf = lines_ite;
 	std::advance(lines_ite, k);
 	local_entries->splice(local_it, *t_lines, lines_itf, lines_ite);
-
-	//std::cout << "Players lines: " << local_entries->size() << std::endl;
-	//std::cout << "Lines left: " << t_lines->size() << std::endl;
-	// Print players
-	for(local_it = local_entries->begin(); local_it != local_entries->end(); local_it++) {
-		//std::cout << **local_it << std::endl;
-	}
 
 	if(t_lines->size() > 0)
 		throw std::runtime_error("init::aux_separated_arg t_lines not empty");

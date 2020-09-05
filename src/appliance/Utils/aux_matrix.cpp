@@ -9,8 +9,6 @@
 
 #include "Utils/aux_matrix.hpp"
 
-#include <iostream>
-
 namespace Utils {
 
 //:D
@@ -26,7 +24,6 @@ aux_matrix::~aux_matrix()
 {
 	if(entries != nullptr)
 		while(!entries->empty()){
-			//std::cout << "Deleting entry " << std::endl << *(entries->front()) << std::endl;
 			delete entries->front();
 			entries->pop_front();
 		}

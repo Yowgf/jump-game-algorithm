@@ -18,7 +18,6 @@
 
 #include "Containers/bfs.hpp"
 
-#include <iostream>
 #include <stdexcept>
 
 namespace Containers {
@@ -78,20 +77,11 @@ void bfs::bfs_win_found()
 			throw std::runtime_error("Caught nullptr node!");
 		m_cur_layer = m_cur_node->get_eff();
 		m_cur_pos = m_cur_node->get_pos();
-
-		///////////////////////////////////////////////////////////////////////
-		//std::cout << "Layer: " << m_cur_layer << std::endl;
-		if(m_cur_layer > 500)
-			throw std::runtime_error("Infinite loop");
-		//std::cout << "queue size: " << m_queue->size() << std::endl;
-		///////////////////////////////////////////////////////////////////////
 		
 		// Fetching node's edges
 		m_cur_edges = m_cur_node->get_out_edges();
-		// Node with no edges (0 movement length)
 		if(m_cur_edges == nullptr)
 			throw std::runtime_error("Caught nullptr edges!");
-		//std::cout << "Node " << m_cur_node->get_pos() << " has " << m_cur_edges->size() << " edges" << std::endl;
 
 		// Push current edges to queue
 		m_it = m_cur_edges->begin();
@@ -99,19 +89,15 @@ void bfs::bfs_win_found()
 			// If the node may have a path that leads
 			//   to victory. (effort not smaller than
 			//   we would have in this instance)
-			//std::cout << "Checking node " << (*m_it)->get_pos() << std::endl;
-			//std::cout << "Current effort " << (*m_it)->get_eff() << std::endl;
 			if(m_cur_layer + 1 <= (*m_it)->get_eff()) {
 				// Then add it to be the investigated
 				// Set its effort to be the current layer + 1
 				// Set its past movement accordingly
 				m_cur_past_mov = aux_dist_to(*m_it);
-				//std::cout << "Pushing node " << (*m_it)->get_pos() << std::endl;
 				aux_push_eff((*m_it), m_cur_layer + 1, m_cur_past_mov);
 				// We have to check if the next node is the finish line,
 				//   so that we may mark movement of the player correctly.
 				if((*m_it) == m_finish_line) {
-					//std::cout << "Pulou do node " << m_cur_pos << " para finish line" << std::endl;
 					m_player->set_final_mov(m_cur_node->get_mov());
 					return;
 				}
@@ -148,13 +134,6 @@ void bfs::bfs_win_search()
 		m_cur_layer = m_cur_node->get_eff();
 		m_cur_pos = m_cur_node->get_pos();
 
-		///////////////////////////////////////////////////////////////////////
-		//std::cout << "Layer: " << m_cur_layer << std::endl;
-		if(m_cur_layer > 500)
-			throw std::runtime_error("Infinite loop");
-		//std::cout << "queue size: " << m_queue->size() << std::endl;
-		///////////////////////////////////////////////////////////////////////
-
 		// Fetching node's edges
 		m_cur_edges = m_cur_node->get_out_edges();
 		// Node with no edges (0 movement length)
@@ -171,12 +150,10 @@ void bfs::bfs_win_search()
 				// Set its past movement accordingly
 				(*m_it)->set_exp();
 				m_cur_past_mov = aux_dist_to(*m_it);
-				//std::cout << "Pushing node " << m_board->get_pos(*m_it) << std::endl;
 				aux_push_eff((*m_it), m_cur_layer + 1, m_cur_past_mov);
 				// We have to check if the next node is the finish line,
 				//   so that we may mark movement of the player correctly.
 				if((*m_it) == m_finish_line) {
-					//std::cout << "Pulou do node " << m_cur_pos << " para finish line" << std::endl;
 					m_player->set_final_mov(m_cur_node->get_mov());
 				}
 			}
@@ -190,12 +167,10 @@ void bfs::bfs_win_search()
 	
 	// Finally, checking if we found a win graph
 	if(m_finish_line->is_exp()) {
-		//std::cout << "We found node " << m_board->get_pos(m_finish_line) << '!' << std::endl;
 		// If so, we can make a backwards search, to
 		//   find all the nodes that have a path into
 		//   the win graph.
 
-		//std::cout << "Building win_graph" << std::endl;
 		m_cur_node = m_finish_line;
 		m_cur_node->set_win();
 		m_queue->push(m_cur_node);
@@ -212,20 +187,15 @@ void bfs::bfs_win_search()
 					// Set is as part of the win_graph
 					(*m_it)->set_win();
 					m_queue->push(*m_it);
-					//std::cout << (*m_it)->get_pos() << ' ';
 				}
 				// Move on
 				m_it++;
 			}
 			m_cur_node = aux_next_node();
 		}
-		//std::cout << std::endl;
 
 		// Setting our player to be a finalist
 		m_player->set_finalist(true);
-		// Setting this to be the final movement of our player
-		// Setting our identification variable to be true.
-		//std::cout << "Win_graph is settled !!!" << std::endl;
 	}
 
 	return;
@@ -264,16 +234,14 @@ bfs::bfs(player* t_player, board* t_board)
 
 bfs::~bfs()
 {
-	//std::cout << "Trying to delete bfs structures..." << std::endl;
-
 	if(m_queue != nullptr)
 		while(!m_queue->empty())
 			m_queue->pop();
 	delete m_queue;
-	// Extern (should delete!)
+
+	// Extern (should not delete here!)
 	m_cur_node = nullptr;
 	m_cur_edges = nullptr;
-	//std::cout << "Deleted bfs structures." << std::endl;
 }
 
 }

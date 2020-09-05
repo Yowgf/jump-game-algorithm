@@ -49,17 +49,12 @@ void manager::exec_alg(Containers::board* t_board, Containers::players* t_player
 
 	// Basically perform bfs algorithm.
 	// Also, this loop manipulates the game's winners
-	//std::cout << '\n';
 	while(!t_players->empty()) {
 		l_cur_player = t_players->pop_front();
-		//std::cout << "Searching player " << l_cur_player->get_id() << "..." << std::endl;
 		Containers::bfs(l_cur_player, t_board);
-		//std::cout << "Searched player." << std::endl;
 
 		// Checking if the current player got to the end.
 		if(l_cur_player->is_finalist()) {
-			//std::cout << "Player is finalist!" << std::endl;
-			//std::cout << "Player final movement: " << l_cur_player->get_final_mov() << std::endl;
 			// If he has gotten to the end with better effort, or
 			//   if the movement to the last node before the
 			//   finish line was smaller, this player has beaten
@@ -71,7 +66,6 @@ void manager::exec_alg(Containers::board* t_board, Containers::players* t_player
 					)
 				) {
 				t_players->clear_winners();
-				//std::cout << "We have a new super winner!!!" << std::endl;
 			}
 			t_players->add_winner(l_cur_player);
 		}

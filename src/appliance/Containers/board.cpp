@@ -16,7 +16,6 @@
 
 #include "Utils/Utils.hpp" // aux_str_to_int
 
-#include <iostream>
 #include <stdexcept>
 
 namespace Containers {
@@ -28,8 +27,6 @@ void board::aux_fetch_edges(node* t_node)
 	register unsigned int l_cur_mov = t_node->get_mov();
 	if(l_cur_pos >= m_positions->size())
 		throw std::invalid_argument("aux_fetch_edges invalid l_cur_pos");
-
-	//std::cout << "Fetching edges for node " << l_cur_pos << std::endl;
 
 	// Useful variables
 	std::list<node*>* l_cur_out_edges = t_node->get_out_edges();
@@ -50,7 +47,6 @@ void board::aux_fetch_edges(node* t_node)
 			l_new_def_pos = l_cur_pos - l_cur_mov;
 			l_cur_next_node = get_node(l_new_def_pos);
 			if(l_cur_mov != l_cur_next_node->get_mov()) {
-				//std::cout << "Adding new in edge to " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
 				l_cur_next_node->get_in_edges()->push_back(t_node);
 			}
 			l_cur_out_edges->push_back(l_cur_next_node);
@@ -61,7 +57,6 @@ void board::aux_fetch_edges(node* t_node)
 			l_new_def_pos = l_cur_pos + l_cur_mov;
 			l_cur_next_node = get_node(l_new_def_pos);
 			if(l_cur_mov != l_cur_next_node->get_mov()) {
-				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
 				l_cur_next_node->get_in_edges()->push_back(t_node);
 			}
 			l_cur_out_edges->push_back(l_cur_next_node);
@@ -72,7 +67,6 @@ void board::aux_fetch_edges(node* t_node)
 			l_new_def_pos = l_cur_pos - l_cur_mov * n;
 			l_cur_next_node = get_node(l_new_def_pos);
 			if(l_cur_mov != l_cur_next_node->get_mov()) {
-				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
 				l_cur_next_node->get_in_edges()->push_back(t_node);
 			}
 			l_cur_out_edges->push_back(l_cur_next_node);
@@ -83,19 +77,12 @@ void board::aux_fetch_edges(node* t_node)
 			l_new_def_pos = l_cur_pos + l_cur_mov * n;
 			l_cur_next_node = get_node(l_new_def_pos);
 			if(l_cur_mov != l_cur_next_node->get_mov()) {
-				//std::cout << "Adding new edge " << l_cur_next_node->get_pos() << " "<< l_cur_pos << std::endl;
 				l_cur_next_node->get_in_edges()->push_back(t_node);
 			}
 			l_cur_out_edges->push_back(l_cur_next_node);
 		}
 		
 	}
-
-	if(l_cur_out_edges != nullptr) {
-
-	}
-	else
-		//std::cout << "No edges found." << std::endl;
 
 	return;
 }
@@ -119,11 +106,8 @@ board::board(Utils::aux_matrix* t_board_lines)
 	// m_positions
 	// Converting entries in "entries" to integers
 	std::list<unsigned int>* l_int_entries = Utils::aux_str_to_int(t_board_lines);
-	//std::cout << "int_entries_size: " << l_int_entries->size() << std::endl;
 	if(l_int_entries == nullptr || l_int_entries->size() != m * n)
 		throw std::runtime_error("Malformed l_int_entries");
-
-	//std::cout << "Generated l_int_entries" << std::endl;
 
 	unsigned int i = 0;
 	unsigned int l_cur_mov_len = 0;
@@ -138,7 +122,6 @@ board::board(Utils::aux_matrix* t_board_lines)
 		l_int_entries->pop_front();
 		(*pos_it)->set_mov(l_cur_mov_len);
 	}
-	//std::cout << std::endl;
 	// Must be done separately
 	for(pos_it = m_positions->begin(); pos_it != m_positions->end(); pos_it++) {
 		aux_fetch_edges(*pos_it);
@@ -146,22 +129,17 @@ board::board(Utils::aux_matrix* t_board_lines)
 	
 	delete l_int_entries;
 
-	//std::cout << "m = " << m << " n = " << n << std::endl;
-
 	// m_finish_line
-	// has to be done after the making of the m_positions vector...
-	//std::cout << "Set finish line to be " << get_pos(m_finish_line) << std::endl;
+	// Has to be done after the making of the m_positions vector...
 	m_finish_line = m_positions->back();
 }
 
 //:D
 board::~board()
 {
-	//std::cout << "Trying to delete the board..." << std::endl;
 	register unsigned int i = 0;
 	std::vector<node*>::iterator it = m_positions->begin();
 	while(it != m_positions->end()) {
-		//std::cout << "Deleting node " << i << std::endl;
 		delete *it;
 		i++;
 		it++;
