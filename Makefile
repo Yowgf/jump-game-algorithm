@@ -9,7 +9,6 @@
 #
 # Options:
 #
-# "TEST=" ------------------- enter into the test compilation
 # "TARGET=..." -------------- lets you specify file names
 #
 # clean --------------------- cleaning built files rule
