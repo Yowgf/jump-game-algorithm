@@ -2,7 +2,7 @@
 # Main Makefile
 # ===============================================================
 #
-# This makefile tries to cover the options of normal compilation 
+# This makefile tries to cover the options of normal compilation
 #   (not really useful in this case), and test compilation, which
 #   runs all the tests especified for each class.
 # ---------------------------------------------------------------
@@ -14,6 +14,7 @@
 #
 # clean --------------------- cleaning built files rule
 # ---------------------------------------------------------------
+SHELL := /bin/bash
 
 # Auxiliary makefiles addresses
 ALL_FILES_VARS     := F_CUSTOM_FUNCTIONS F_GLOBAL_VARS F_VAR_EXPANSION \

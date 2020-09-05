@@ -24,13 +24,13 @@ aux_matrix::aux_matrix()
 //:D
 aux_matrix::~aux_matrix()
 {
-	while(!entries->empty()){
-		//std::cout << "Deleting entry " << std::endl << *(entries->front()) << std::endl;
-		delete entries->front();
-		entries->pop_front();
-	}
+	if(entries != nullptr)
+		while(!entries->empty()){
+			//std::cout << "Deleting entry " << std::endl << *(entries->front()) << std::endl;
+			delete entries->front();
+			entries->pop_front();
+		}
 	delete entries;
 }
 
 }
-

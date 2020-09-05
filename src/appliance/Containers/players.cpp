@@ -62,10 +62,8 @@ players::players(Utils::aux_matrix* t_players_lines)
 
 		m_players->push_back(new player(i, l_x, l_y));
 	}
-	
+
 	delete l_int_entries;
-
-
 }
 
 //:D
@@ -86,7 +84,7 @@ void players::add_winner(player* t_new_winner)
 {
 	if(t_new_winner == nullptr)
 		throw std::invalid_argument("players::set_winner nullptr t_new_winner");
-	
+
 	m_cur_winners->push_back(t_new_winner);
 	m_cur_winner_mov = t_new_winner->get_final_mov();
 }
@@ -111,7 +109,7 @@ player* players::get_abs_winner()
 
 	//std::cout << "Searching for absolute winner" << std::endl;
 	//std::cout << "We currently have " << m_cur_winners->size() << " possible winners" << std::endl;
-	
+
 	player* winner = m_cur_winners->front();
 	unsigned int min_id = winner->get_id();
 	// Start iterator from second position

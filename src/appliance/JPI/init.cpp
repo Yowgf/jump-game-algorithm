@@ -40,12 +40,6 @@ init::init(int t_argc, char** t_argv)
 }
 
 //:D
-init::~init()
-{
-
-}
-
-//:D
 Containers::board* init::init_board(Utils::aux_matrix* t_board_lines)
 {
 	return new Containers::board(t_board_lines);
@@ -61,8 +55,8 @@ Containers::players* init::init_players(Utils::aux_matrix* t_players_lines)
 std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 {
 	// Guarantees that t_argv[1] is in range.
-	if(t_argc <= 1 || t_argc >= 3)
-		throw std::invalid_argument(std::to_string(t_argc - 1) += 
+	if(t_argc != 2)
+		throw std::invalid_argument(std::to_string(t_argc - 1) +=
 			" arguments provided\nProgram usage: $(program) $(input_file).\n");
 
 	char* file_name = t_argv[1];
@@ -89,7 +83,7 @@ std::list<std::string*>* init::aux_read_entry_file(int t_argc, char** t_argv)
 	//std::cout << "Ended file reading..." << std::endl;
 
 	entry_file.close();
-	
+
 	return lines;
 }
 
@@ -106,7 +100,7 @@ Utils::aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	// Variables used to make transition
 	unsigned int m = 0, n = 0, k = 0;
 	std::stringstream ss;
-	
+
 	// Acquiring m and n
 	ss.str(*(t_lines->front()));
 	t_lines->pop_front();
@@ -140,7 +134,7 @@ Utils::aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	for(local_it = local_entries->begin(); local_it != local_entries->end(); local_it++) {
 		//std::cout << **local_it << std::endl;
 	}
-	
+
 	// Setting players strings
 	local_entries = players->entries;
 	local_it = local_entries->begin();
@@ -154,7 +148,10 @@ Utils::aux_separated_arg*  init::aux_separate(std::list<std::string*>* t_lines)
 	for(local_it = local_entries->begin(); local_it != local_entries->end(); local_it++) {
 		//std::cout << **local_it << std::endl;
 	}
-	
+
+	if(t_lines->size() > 0)
+		throw std::runtime_error("init::aux_separated_arg t_lines not empty");
+
 	delete t_lines;
 
 	return sep_arg;

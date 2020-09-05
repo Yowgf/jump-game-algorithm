@@ -36,7 +36,6 @@ private:
 
 public:
 	init(int t_argc, char** t_argv);
-	~init();
 
 };
 
