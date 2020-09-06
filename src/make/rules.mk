@@ -16,7 +16,7 @@ $(BUILD)/%$(OBJECT_EXTENSION) :: $(APPLIANCE)/%$(APP_EXTENSION) $(HEADER)/%$(HEA
 	$(COMPIL_OBJECT_CODE)
 
 # Deletes all the directories supposed to contain objects.
-.PHONY : clean
+.PHONY : clean test
 clean ::
 ifneq "$(origin OBJECT_DIRS)" "file"
 		$(info Variable "OBJECT_DIRS" used for "clean" left undefined.)
@@ -28,13 +28,24 @@ else
 		@echo Are you sure? \(Y/N\)
 		@read choice && \
 		if [[ "$$choice" = "y" ]] || [[ "$$choice" = "Y" ]]; then \
-		{ rm --verbose --preserve-root --recursive $(OBJECT_DIRS) && \
+		{ rm --verbose --preserve-root $(TARGET) && \
+			rm --verbose --preserve-root --recursive $(OBJECT_DIRS) && \
 			echo Cleaning successful.; } || \
 			$(call e_prev_cmd, Cleaning of some directory failed.) \
 		else \
 		echo No cleaning was performed.; \
 		fi
 endif
+
+# Tests the program against set of entries and expected outputs
+# Then measures times to local csv file
+test ::
+ifeq "$(wildcard $(TARGET) $(TARGET).$(EXECUTABLE_EXTENSION))" ""
+	$(MAKE)
+endif
+	@bash $(TEST_SCRIPT) $(TEST_STEM) $(TEST_IN_EXTENSION) $(TEST_OUT_EXTENSION) $(TEST_NUMBER)
+	g++ -std=c++11 -Wall src/time-measure.cpp -o build/time-measure.exe
+	./build/time-measure.exe
 
 # Sink for unidentified patterns.
 % ::

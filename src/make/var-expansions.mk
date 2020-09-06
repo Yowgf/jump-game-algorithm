@@ -26,28 +26,20 @@ HEADER_FILES := $(wildcard $(patsubst %, $(HEADER)/%/*.$(HEADER_EXTENSION), $(MO
 # Appliance files list
 APPLIANCE_FILES := $(wildcard $(patsubst %, $(APPLIANCE)/%/*.$(APP_EXTENSION), $(MODULES)))
 
+# Searches for files with ~$(OBJECT_EXTENSION)~ extension
+OBJECT_FILES := $(patsubst $(APPLIANCE)%$(APP_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(APPLIANCE_FILES))
+
 # Compiled files directory list
 OBJECT_DIRS := $(BUILD)
 
 # To be used in compilation rules
-ifneq "$(origin, TARGET)" "command line"
+ifeq "$(origin, TARGET)" "undefined"
   TARGET := $(BUILD)/Main.$(EXECUTABLE_EXTENSION)
-
-  # Searches for files with ~$(OBJECT_EXTENSION)~ extension
-  
-  OBJECT_FILES := $(patsubst $(APPLIANCE)%$(APP_EXTENSION), $(BUILD)%$(OBJECT_EXTENSION), $(APPLIANCE_FILES))
-
-else
-
-#! COMPLETAR OBJECT FILES NESSE CASO!!!
-#! Caso de target for um modulo
-#! Caso de target for um arquivo em src
-#! Caso contrario mandar erro fatal
 
 endif
 
 # Main file source
-MAIN_FILE = $(patsubst $(BUILD)%$(EXECUTABLE_EXTENSION),$(APPLIANCE)%$(APP_EXTENSION),$(TARGET))
+MAIN_FILE = $(patsubst $(BUILD)%$(EXECUTABLE_EXTENSION),$(APPLIANCE)%$(APP_EXTENSION), build/Main.exe)
 
 # Command for compiling each object
 COMPIL_OBJECT_CODE = $(CXX) $(FLAGS) -I $(HEADER) -c $< -o $@
